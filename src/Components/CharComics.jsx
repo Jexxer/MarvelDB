@@ -57,7 +57,7 @@ function CharComics({ match }) {
             setLoading(true)
             const ts = Date.now()
             const hash = MD5(ts+process.env.REACT_APP_PRIV_KEY+process.env.REACT_APP_PUB_KEY).toString()
-            const api_url = `http://gateway.marvel.com/v1/public/characters/${id}/comics?format=comic&formatType=comic&noVariants=true&limit=${limit.value}&offset=${comicsOffset}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
+            const api_url = `https://gateway.marvel.com/v1/public/characters/${id}/comics?format=comic&formatType=comic&noVariants=true&limit=${limit.value}&offset=${comicsOffset}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
             
             const res = await axios.get(api_url)
             setComics(res.data.data)

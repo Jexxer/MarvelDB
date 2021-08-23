@@ -27,7 +27,7 @@ function Search({searchData, setSearchData}) {
         let search = input.split(' ').join('+')
         const ts = Date.now()
         const hash = MD5(ts+process.env.REACT_APP_PRIV_KEY+process.env.REACT_APP_PUB_KEY).toString()
-        const url = "http://gateway.marvel.com/v1/public/characters?"
+        const url = "https://gateway.marvel.com/v1/public/characters?"
 
         const api_url = `${url}nameStartsWith=${search}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
         console.log(api_url)
