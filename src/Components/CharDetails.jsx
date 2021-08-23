@@ -1,15 +1,60 @@
 import React from 'react';
-import CharComics from './CharComics';
+import { Link } from 'react-router-dom';
+import loadingGif from '../media/loadingGif.gif'
+import comicLogo from '../media/comicLogo.png'
+
 
 function CharDetails({searchData}) {
-    return (
-        <div className="search-page">
-            <h1>{searchData.name}</h1>
-            <img className="hero-img" src={`${searchData.thumbnail.path}.${searchData.thumbnail.extension}`} alt={searchData.name + " Image"}/>
-            <p className="character-desc">{searchData.description}</p>
-            <CharComics searchData={searchData} />
-        </div>
-    );
+
+    if(searchData === null){
+        return (
+            <div className="loading-screen">
+                <img className="loading-gif" src={loadingGif} alt="loading page" />
+            </div>
+        )
+    } else {
+
+        let characters = searchData.map(item => {
+            return (
+                <div className="search-page-results">
+
+                    <div className="hero-name-container">
+                        <h1 className="hero-name">{item.name}</h1>
+                    </div>
+                    <div className="search-page-content">
+                        <div className="hero-img-container">
+                            <img className="hero-img" src={`${item.thumbnail.path}.${item.thumbnail.extension}`} alt={item.name + " Image"}/>
+                        </div>
+                        <div className="search-page-content-right">
+                            <p className="character-desc">{item.description}</p>
+                            
+                            <div className="comic-series">
+                                <p><strong>Comics: </strong>{item.comics.available}</p>
+                                <p><strong>Series: </strong>{item.series.available}</p>
+                            </div>
+                            
+                            <div className="character-links">
+                                <Link to={`/comics/${item.id}`}>
+                                    <p className="details-buttons">Comics</p>
+                                </Link>
+                                <Link to="/">
+                                    <p className="details-buttons">Series</p>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                
+            
+                </div>
+            )
+        })
+
+        return (
+            <div>{characters}</div>
+        );
+    }
+    
+    
 }
 
 export default CharDetails;

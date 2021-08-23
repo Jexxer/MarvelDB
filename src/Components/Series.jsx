@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { MD5 } from 'crypto-js';
 import axios from 'axios';
+import { MD5 } from 'crypto-js';
 import Select from 'react-select'
 import loadingGif from '../media/loadingGif.gif'
+import { Link } from 'react-router-dom';
 
-
-
-
-function CharComics({ match }) {
+function Series({ match, seriesURL, setSeriesURL }) {
 
     const options = [
         { value: 5, label: '5' },
@@ -21,51 +18,59 @@ function CharComics({ match }) {
         value: 10
     }
 
-    const charId = match.params.id
-    const [comics, setComics] = useState(null)
+    const comicBookId = match.params.id
+    const [series, setSeries] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [comicIsLoading, setComicIsLoading] = useState(true)
 
-    const [comicsOffset, setComicsOffset] = useState(0)
-    const [totalComics, setTotalComics] = useState(0)
+    const [seriesOffset, setSeriesOffset] = useState(0)
     const [limit, setLimit] = useState(initialLimit)
 
-    // 100 / limit(comics per page)
-
-    // const [comicsReceived, setComicsReceived] = useState([])
-    // let totalComicsReceived = []
-    // totalComicsReceived = totalComicsReceived.concat(comics.results) // an array of results (each comic)
-
-    
-    // this is something to consider
     
     useEffect(() => {
-        setComicsOffset(0)
+        setSeriesOffset(0)
     },[limit])
 
     function nextPage(){
-        let currentOffset = comicsOffset
-        setComicsOffset(currentOffset + limit.value)
+        let currentOffset = seriesOffset
+        setSeriesOffset(currentOffset + limit.value)
     }
 
     function previousPage(){
-        let currentOffset = comicsOffset
-        setComicsOffset(currentOffset - limit.value)
+        let currentOffset = seriesOffset
+        setSeriesOffset(currentOffset - limit.value)
     }
 
     useEffect(() => {
-        const getComics = async (id) => {
-            setLoading(true)
-            const ts = Date.now()
-            const hash = MD5(ts+process.env.REACT_APP_PRIV_KEY+process.env.REACT_APP_PUB_KEY).toString()
-            const api_url = `http://gateway.marvel.com/v1/public/characters/${id}/comics?format=comic&formatType=comic&noVariants=true&limit=${limit.value}&offset=${comicsOffset}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
-            
-            const res = await axios.get(api_url)
-            setComics(res.data.data)
-            setTotalComics(res.data.data.total)
-            setLoading(false)
+        const getComicData = async (id) => {
+            const ts = Date.now();
+            const hash = MD5(ts + process.env.REACT_APP_PRIV_KEY + process.env.REACT_APP_PUB_KEY).toString();
+            const api_url = `https://gateway.marvel.com/v1/public/comics/${id}?ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`;
+
+            const res = await axios.get(api_url);
+            setSeriesURL(res.data.data.results[0].series.resourceURI);
+            setComicIsLoading(false)
         }
-        getComics(charId)
-    },[charId, limit, comicsOffset])
+        getComicData(comicBookId)
+    }, [])
+
+    useEffect(() => {
+        const getSeries = async () => {
+            if(comicIsLoading){
+                console.log('failed')
+            } else {
+                const ts = Date.now()
+                const hash = MD5(ts+process.env.REACT_APP_PRIV_KEY+process.env.REACT_APP_PUB_KEY).toString()
+                const api_url = `${seriesURL}/comics?noVariants=true&orderBy=issueNumber&limit=${limit.value}&offset=${seriesOffset}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
+                
+                const res = await axios.get(api_url)
+                setSeries(res.data.data)
+                setLoading(false)
+            }
+            
+        }
+        getSeries(comicBookId)
+    },[comicBookId, limit, seriesOffset, comicIsLoading])
 
     if(loading){
         return (
@@ -74,8 +79,8 @@ function CharComics({ match }) {
             </div> 
         )
     } else {
-        console.log(comics)
-        let comicsDisplay = comics.results.map(item => {
+        console.log(seriesURL)
+        let seriesDisplay = series.results.map(item => {
             return (
                 <div className="comic-item">
                     
@@ -90,11 +95,11 @@ function CharComics({ match }) {
             )
         })
         
-        if(comicsDisplay.length === 0){
+        if(seriesDisplay.length === 0){
             return(
                 <div className="no-comics-found">
-                    <h1>No Comics Found</h1>
-                    <Link to="/search">Go back</Link>
+                    <h1>No Series Found</h1>
+                    <Link to={`/comicinfo/${comicBookId}`}>Go back</Link>
                 </div>
             )
         } else {
@@ -110,7 +115,7 @@ function CharComics({ match }) {
                     />
                 </div>
                 <div className="comics-container">
-                    {comicsDisplay}
+                    {seriesDisplay}
                 </div>
                 <div className="page-buttons">
                     <button className='previous-button' onClick={previousPage}>Previous</button>
@@ -121,12 +126,6 @@ function CharComics({ match }) {
         }
         
     }
-
-    
-    
-
-    
-    
 }
 
-export default CharComics;
+export default Series;

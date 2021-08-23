@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MD5 } from 'crypto-js';
-import { Route } from 'react-router';
 import CharDetails from './CharDetails';
 
-function Search(props) {
+function Search({searchData, setSearchData}) {
 
     let initialState = {
         input: ''
     }
 
     const [formState, setFormState] = useState(initialState)
-    const [searchData, setSearchData] = useState(null)
 
     function handleChange(event){
             setFormState({
@@ -31,13 +29,13 @@ function Search(props) {
         const hash = MD5(ts+process.env.REACT_APP_PRIV_KEY+process.env.REACT_APP_PUB_KEY).toString()
         const url = "http://gateway.marvel.com/v1/public/characters?"
 
-        const api_url = `${url}name=${search}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
-
+        const api_url = `${url}nameStartsWith=${search}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
+        console.log(api_url)
             fetch(api_url)
             .then(response => response.json())
             .then(res => {
                 console.log(res)
-                setSearchData(res.data.results[0])
+                setSearchData(res.data.results)
             })
             .catch(console.error())
     }

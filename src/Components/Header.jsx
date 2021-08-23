@@ -11,7 +11,7 @@ function Header(props) {
                 <Link to="/" className="nav-links">Home</Link>
                 <Link to="/search" className="nav-links">Search</Link>
                 <Link to="/About" className="nav-links">About</Link>
-                <Link to="/" className="nav-links">Github</Link>
+                <a className="nav-links" href="https://github.com/Jexxer" target="_blank">Github</a>
             </div>
         </div>
     );

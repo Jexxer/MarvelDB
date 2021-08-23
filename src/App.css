@@ -1,7 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
 *{
   margin: 0;
   padding: 0;
 }
+
+.App{
+  width: 100vw;
+  min-height: 100vh;
+  height: 100%;
+  background: linear-gradient(217deg, #5AB9EA, rgba(255,0,0,0) 70.71%),
+              linear-gradient(336deg, #5680E9, rgba(0,0,255,0) 70.71%);
+}
+
+html{
+  height: 100%;
+}
+
+.loading-screen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 70vh;
+}
+
+.loading-gif{
+  width: 5rem;
+  height: auto;
+}
+
+/* Header */
 
 .header{
   display: flex;
@@ -21,6 +50,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin: 0 1rem;
 }
 
 .nav-links{
@@ -34,13 +64,13 @@
   color: #8860D0;
 }
 
-.App{
-  width: 100vw;
-  min-height: 100vh;
-  height: 100%;
-  background: linear-gradient(217deg, #5AB9EA, rgba(255,0,0,0) 70.71%),
-              linear-gradient(336deg, #5680E9, rgba(0,0,255,0) 70.71%);
+@media(min-width: 700px){
+  .header{
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
+
 
 /*Home Component*/
 
@@ -51,6 +81,10 @@
   align-items: center;
   width: 100%;
   height: 80vh;
+}
+
+.home-page-text{
+  width: 20ch;
 }
 
 .home-button{
@@ -83,7 +117,6 @@
   border: none;
   border-radius: 2rem;
   width: 50vw;
-
   height: 2rem;
 }
 
@@ -92,13 +125,295 @@
   box-shadow: 0 0 5px 1px grey;
 }
 
+.select{
+  margin: 1rem 2rem;
+  width: 11rem;
+}
+
+.select-container{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-page-results{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95vw;
+  border: 2px solid black;
+  margin: 1rem 0;
+  border-radius: 1rem;
+}
+
+.hero-name{
+  margin: 0 4px;
+}
+
+.hero-img-container,
+.comic-item-img-container{
+  display: flex;
+  justify-content: center;
+  width: 95%
+}
+
+.search-page-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
 .hero-img{
-  margin-top: 1rem;
-  width: 100vw;
+  margin: 1rem 0;
+  width: 100%;
   height: auto;
+  box-shadow: 0 0  20px 0px white;
+  border-radius: 1rem;
+  /* border: 5px solid gold; */
 }
 
 .character-desc{
+  width: 85vw;
+  margin: 1rem 0;
+}
+
+.comic-series{
+  width: 75%;
+  margin: 1rem 0;
+}
+
+.character-links{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.character-links a{
+  text-decoration: none;
+}
+
+.details-buttons{
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  text-align: center;
+  color: crimson;
+  cursor: pointer;
+  width: 33vw;
+  background-color: yellow;
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  margin: 0.5rem auto;
+}
+.details-buttons:hover{
+  color: blue;
+  background-color: red;
+}
+
+@media(min-width: 700px){
+  .hero-img{
+    margin-top: 1rem;
+    width: 33vw;
+    height: auto;
+  }
+
+  .details-buttons{
+    max-width: 15vw;
+  }
+
+  .search-page-content{
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .hero-img-container{
+    width: 50%;
+  }
+
+  .search-page-content-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+  }
+
+  .character-desc{
+    font-size: 1.25rem;
+    width: 80%;
+    margin: 0 1rem;
+  }
+}
+
+@media(max-width: 350px){
+  .character-links{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .details-buttons{
+    min-width: 60vw;
+  }
+
+}
+
+/* Character comics book page */
+
+.no-comics-found{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+}
+
+.no-comics-found h1{
+  margin-bottom: 1rem;
+}
+
+.no-comics-found a{
+  text-decoration: none;
+  color: red;
+  cursor: pointer;
+}
+
+.no-comics-found a:hover{
+  color: #8860D0;
+}
+
+
+.comics-container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.comic-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 1rem;
+  margin: 0.5rem auto;
+  width: 95vw;
+}
+
+.comic-cover-img{
+  width: 100%;
+  height: auto;
+  box-shadow: 2px 2px 5px 1px grey;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.comic-title{
+  padding: 0.5rem;
+}
+
+.page-buttons{
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
+
+.next-button,
+.previous-button{
+  margin: 1rem;
+  width: 10rem;
+  height: 2rem;
+}
+
+
+@media(min-width: 700px){
+  .comics-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .comic-item{
+    margin: 1rem;
+    width: auto;
+    border: none;
+  }
+
+  .comic-title{
+    display: none;
+  }
+
+  .comic-cover-img{
+    max-width: 18vw;
+    min-width: 15vw;
+    height: auto;
+  }
+
+}
+
+/* Single Comic Page */
+
+.comic-details-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.comic-book-img{
+  border-radius: 4px;
   width: 80vw;
-  margin-top: 2rem;
+  box-shadow: 0 0  10px 0px white;
+}
+
+.comic-book-details-section{
+  margin: 2rem 1rem;
+}
+
+.single-comic-title{
+  margin-bottom: 0.5rem;
+}
+
+.comic-book-details-section-content a{
+  text-decoration: none;
+}
+
+
+@media(min-width: 700px){
+  .comic-details-container{
+    margin-top: 2rem;
+    justify-content: space-evenly;
+    flex-direction: row;
+  }
+
+  .comic-book-details-section{
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    width: 50vw;
+  }
+
+  .comic-book-details-section-content{
+    border: 1px solid red;
+    border-radius: 1rem;
+    background: linear-gradient(217deg, #5AB9EA, rgba(255,0,0,0) 70.71%),
+                linear-gradient(336deg, #5680E9, rgba(0,0,255,0) 70.71%);
+    box-shadow: 0 0 100px 0 white;
+    width: 33vw;
+    padding: 1.5rem 2rem;
+  }
+
+  .comic-book-img{
+    max-width: 25vw;
+  }
+
+  .comic-book-img-container{
+    display: flex;
+    justify-content: center;
+    width: 50vw;
+
+  }
+
 }
