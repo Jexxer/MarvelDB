@@ -36,9 +36,6 @@ function CharDetails({searchData}) {
                                 <Link to={`/comics/${item.id}`}>
                                     <p className="details-buttons">Comics</p>
                                 </Link>
-                                <Link to="/">
-                                    <p className="details-buttons">Series</p>
-                                </Link>
                             </div>
                         </div>
                     </div>
