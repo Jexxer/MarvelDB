@@ -74,6 +74,13 @@ html{
 
 /*Home Component*/
 
+.home-div-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .home-div{
   display:flex;
   flex-direction: row;
@@ -85,6 +92,7 @@ html{
 
 .home-page-text{
   width: 20ch;
+  text-align: center;
 }
 
 .home-button{
