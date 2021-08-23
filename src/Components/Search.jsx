@@ -30,11 +30,9 @@ function Search({searchData, setSearchData}) {
         const url = "https://gateway.marvel.com/v1/public/characters?"
 
         const api_url = `${url}nameStartsWith=${search}&ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`
-        console.log(api_url)
             fetch(api_url)
             .then(response => response.json())
             .then(res => {
-                console.log(res)
                 setSearchData(res.data.results)
             })
             .catch(console.error())

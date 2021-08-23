@@ -48,7 +48,7 @@ function Series({ match, seriesURL, setSeriesURL }) {
             const api_url = `https://gateway.marvel.com/v1/public/comics/${id}?ts=${ts}&apikey=${process.env.REACT_APP_PUB_KEY}&hash=${hash}`;
 
             const res = await axios.get(api_url);
-            setSeriesURL(res.data.data.results[0].series.resourceURI);
+            setSeriesURL(`https${res.data.data.results[0].series.resourceURI.substring(4)}`);
             setComicIsLoading(false)
         }
         getComicData(comicBookId)
@@ -57,7 +57,7 @@ function Series({ match, seriesURL, setSeriesURL }) {
     useEffect(() => {
         const getSeries = async () => {
             if(comicIsLoading){
-                console.log('failed')
+                return null
             } else {
                 const ts = Date.now()
                 const hash = MD5(ts+process.env.REACT_APP_PRIV_KEY+process.env.REACT_APP_PUB_KEY).toString()
@@ -79,7 +79,6 @@ function Series({ match, seriesURL, setSeriesURL }) {
             </div> 
         )
     } else {
-        console.log(seriesURL)
         let seriesDisplay = series.results.map(item => {
             return (
                 <div className="comic-item">

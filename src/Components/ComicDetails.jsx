@@ -17,7 +17,6 @@ function ComicDetails({ match, seriesURL, setSeriesURL }) {
 
       const res = await axios.get(api_url);
       setComicBook(res.data.data.results);
-      // setSeriesURL()
       setLoading(false);
     };
     getComic(comicId);
@@ -30,7 +29,6 @@ function ComicDetails({ match, seriesURL, setSeriesURL }) {
       </div>
     );
   } else {
-      console.log(comicBook)
       let releaseDate = comicBook[0].dates[0].date.substring(0, 10)
     return (
         <div className="comic-details-container">

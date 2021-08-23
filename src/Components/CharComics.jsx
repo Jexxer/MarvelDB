@@ -74,7 +74,6 @@ function CharComics({ match }) {
             </div> 
         )
     } else {
-        console.log(comics)
         let comicsDisplay = comics.results.map(item => {
             return (
                 <div className="comic-item">

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import loadingGif from '../media/loadingGif.gif'
-import comicLogo from '../media/comicLogo.png'
 
 
 function CharDetails({searchData}) {
